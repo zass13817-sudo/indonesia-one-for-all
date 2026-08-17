@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Untukmu, Indonesia 🇮🇩</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#090909;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* =========================
+   QR OPENING
+========================= */
+
+#qrScreen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #d90000 0%,
+        #d90000 50%,
+        #fff 50%,
+        #fff 100%
+    );
+
+    transition:1s ease;
+}
+
+#qrScreen.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.qrBox{
+    width:min(90%,420px);
+    padding:35px 25px;
+
+    animation:fadeUp 1s ease;
+}
+
+.flag{
+    width:150px;
+    height:100px;
+
+    margin:0 auto 25px;
+
+    overflow:hidden;
+    border-radius:5px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.red{
+    height:50%;
+    background:#e00000;
+}
+
+.white{
+    height:50%;
+    background:#fff;
+}
+
+.qrBox h1{
+    font-size:32px;
+    font-weight:900;
+    color:white;
+
+    text-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+
+.qrBox h2{
+    margin-top:10px;
+
+    color:#222;
+    font-size:14px;
+    letter-spacing:5px;
+}
+
+.qrArea{
+    margin:30px auto;
+
+    width:220px;
+    height:220px;
+
+    padding:10px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.2);
+}
+
+#reader{
+    width:100%;
+    height:100%;
+}
+
+.scanText{
+    color:#333;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.manualBtn{
+    margin-top:18px;
+
+    padding:12px 22px;
+
+    border:none;
+    border-radius:30px;
+
+    background:#d00000;
+    color:white;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* =========================
+   CINEMATIC INTRO
+========================= */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:9000;
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        180deg,
+        #d00000,
+        #850000
+    );
+}
+
+#intro.show{
+    display:flex;
+}
+
+#intro.hide{
+    animation:fadeOut 1s forwards;
+}
+
+.introContent{
+    padding:25px;
+    animation:zoomIn 1.5s ease;
+}
+
+.introContent h1{
+    font-size:clamp(40px,10vw,90px);
+    font-weight:900;
+}
+
+.introContent p{
+    margin-top:15px;
+    letter-spacing:7px;
+}
+
+.introFlag{
+    width:180px;
+    height:120px;
+
+    margin:0 auto 35px;
+
+    overflow:hidden;
+
+    animation:wave 3s infinite;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle,
+        #ed1c24,
+        #9b0000 65%,
+        #470000
+    );
+}
+
+.hero::before,
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.hero::before{
+    width:600px;
+    height:600px;
+
+    animation:rotate 20s linear infinite;
+}
+
+.hero::after{
+    width:900px;
+    height:900px;
+
+    animation:rotateReverse 30s linear infinite;
+}
+
+.heroContent{
+    position:relative;
+    z-index:2;
+
+    padding:25px;
+}
+
+.heroFlag{
+    width:180px;
+    height:120px;
+
+    margin:0 auto 35px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+
+    animation:wave 3s infinite;
+}
+
+.hero h1{
+    font-size:clamp(45px,10vw,100px);
+    line-height:.9;
+
+    font-weight:900;
+
+    text-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.hero h2{
+    margin-top:25px;
+
+    font-size:clamp(20px,4vw,35px);
+
+    letter-spacing:8px;
+}
+
+.hero p{
+    max-width:650px;
+
+    margin:25px auto;
+
+    line-height:1.7;
+
+    color:#eee;
+}
+
+.scroll{
+    margin-top:50px;
+
+    font-size:12px;
+    letter-spacing:4px;
+
+    animation:bounce 1.5s infinite;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:90px 7%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.title h2{
+    font-size:clamp(30px,6vw,55px);
+    color:#d00000;
+    font-weight:900;
+}
+
+.title p{
+    margin-top:12px;
+    color:#777;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    background:#fafafa;
+    color:#222;
+}
+
+.messageCard{
+    max-width:900px;
+
+    margin:auto;
+
+    padding:45px;
+
+    background:white;
+
+    border-left:8px solid #d00000;
+
+    border-radius:10px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,.1);
+
+    line-height:1.9;
+
+    font-size:17px;
+}
+
+.messageCard strong{
+    color:#d00000;
+}
+
+/* =========================
+   HEROES
+========================= */
+
+.heroes{
+    background:#eee;
+    color:#222;
+}
+
+.heroGrid{
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+}
+
+.heroCard{
+    background:white;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.heroCard:hover{
+    transform:translateY(-10px);
+}
+
+.heroIcon{
+    width:90px;
+    height:90px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#d00000;
+
+    font-size:25px;
+    font-weight:900;
+
+    color:white;
+}
+
+.heroCard h3{
+    margin-top:20px;
+    color:#c00000;
+}
+
+.heroCard p{
+    margin-top:12px;
+
+    color:#666;
+
+    line-height:1.7;
+
+    font-size:14px;
+}
+
+/* =========================
+   ONE FOR ALL
+========================= */
+
+.one{
+    min-height:70vh;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #d90000,
+        #800000
+    );
+}
+
+.one h2{
+    font-size:clamp(45px,10vw,100px);
+    font-weight:900;
+}
+
+.one h3{
+    margin-top:10px;
+    letter-spacing:8px;
+}
+
+.one p{
+    max-width:750px;
+
+    margin-top:30px;
+
+    line-height:1.8;
+}
+
+/* =========================
+   QUOTE
+========================= */
+
+.quote{
+    background:white;
+    color:#222;
+
+    text-align:center;
+}
+
+.quoteText{
+    max-width:850px;
+
+    margin:auto;
+
+    font-size:clamp(25px,5vw,45px);
+
+    font-weight:bold;
+
+    line-height:1.5;
+}
+
+.quoteText span{
+    color:#d00000;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:60px 20px;
+
+    text-align:center;
+
+    background:#080808;
+}
+
+footer p{
+    margin-top:15px;
+    color:#777;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+@keyframes zoomIn{
+    from{
+        opacity:0;
+        transform:scale(.7);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes wave{
+    0%,100%{
+        transform:perspective(500px) rotateY(0);
+    }
+
+    50%{
+        transform:perspective(500px) rotateY(8deg);
+    }
+}
+
+@keyframes rotate{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes rotateReverse{
+    to{
+        transform:rotate(-360deg);
+    }
+}
+
+@keyframes bounce{
+    50%{
+        transform:translateY(10px);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .messageCard{
+        padding:28px;
+        font-size:15px;
+    }
+
+    .heroFlag{
+        width:145px;
+        height:97px;
+    }
+
+    .qrArea{
+        width:190px;
+        height:190px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     QR SCREEN
+========================= -->
+
+<div id="qrScreen">
+
+    <div class="qrBox">
+
+        <div class="flag">
+            <div class="red"></div>
+            <div class="white"></div>
+        </div>
+
+        <h1>UNTUKMU, INDONESIA</h1>
+
+        <h2>SCAN UNTUK MEMBUKA</h2>
+
+        <div class="qrArea">
+
+            <div id="reader"></div>
+
+        </div>
+
+        <div class="scanText">
+
+            Arahkan kamera ke QR Code<br>
+            untuk membuka pesan kemerdekaan.
+
+        </div>
+
+        <button class="manualBtn"
+                onclick="openWebsite()">
+
+            BUKA WEBSITE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     INTRO
+========================= -->
+
+<div id="intro">
+
+    <div class="introContent">
+
+        <div class="introFlag">
+
+            <div class="red"></div>
+            <div class="white"></div>
+
+        </div>
+
+        <h1>INDONESIA</h1>
+
+        <p>ONE FOR ALL 🇮🇩</p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+    <div class="heroContent">
+
+        <div class="heroFlag">
+
+            <div class="red"></div>
+            <div class="white"></div>
+
+        </div>
+
+        <h1>
+            DIRGAHAYU<br>
+            INDONESIA
+        </h1>
+
+        <h2>
+            ONE FOR ALL
+        </h2>
+
+        <p>
+
+            Satu tanah air.
+            Satu bangsa.
+            Satu bahasa.
+
+            <br>
+
+            Berbeda-beda,
+            tetapi tetap Indonesia.
+
+        </p>
+
+        <div class="scroll">
+            ↓ SCROLL ↓
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     UCAPAN
+========================= -->
+
+<section class="message">
+
+    <div class="title">
+
+        <h2>
+            Selamat Ulang Tahun, Indonesia 🇮🇩
+        </h2>
+
+        <p>
+            81 tahun perjalanan bangsa.
+        </p>
+
+    </div>
+
+
+    <div class="messageCard">
+
+        <strong>
+            Dirgahayu Republik Indonesia!
+        </strong>
+
+        <br><br>
+
+        Hari ini bukan hanya tentang bertambahnya
+        usia sebuah negara.
+
+        Hari ini adalah tentang mengenang perjalanan
+        panjang yang dibangun dengan keberanian,
+        persatuan, pengorbanan, dan harapan.
+
+        <br><br>
+
+        Kemerdekaan yang kita rasakan hari ini
+        adalah hasil perjuangan para pahlawan
+        yang rela mengorbankan tenaga, pikiran,
+        bahkan kehidupan mereka demi masa depan
+        bangsa Indonesia.
+
+        <br><br>
+
+        Kini perjuangan itu berada di tangan kita.
+
+        Bukan lagi dengan mengangkat senjata,
+        tetapi dengan belajar, berkarya,
+        menjaga persatuan, menghargai perbedaan,
+        dan memberikan kontribusi terbaik
+        bagi Indonesia.
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PAHLAWAN
+========================= -->
+
+<section class="heroes">
+
+    <div class="title">
+
+        <h2>
+            Mengenang Para Pahlawan
+        </h2>
+
+        <p>
+            Perjuangan mereka tetap hidup
+            dalam kemerdekaan kita.
+        </p>
+
+    </div>
+
+
+    <div class="heroGrid">
+
+
+        <div class="heroCard">
+
+            <div class="heroIcon">
+                SK
+            </div>
+
+            <h3>
+                Soekarno
+            </h3>
+
+            <p>
+
+                Proklamator kemerdekaan Indonesia
+                dan Presiden pertama Republik Indonesia.
+
+            </p>
+
+        </div>
+
+
+        <div class="heroCard">
+
+            <div class="heroIcon">
+                MH
+            </div>
+
+            <h3>
+                Mohammad Hatta
+            </h3>
+
+            <p>
+
+                Proklamator kemerdekaan Indonesia
+                yang memperjuangkan kemerdekaan
+                dan kedaulatan bangsa.
+
+            </p>
+
+        </div>
+
+
+        <div class="heroCard">
+
+            <div class="heroIcon">
+                CDN
+            </div>
+
+            <h3>
+                Cut Nyak Dien
+            </h3>
+
+            <p>
+
+                Pahlawan perempuan dari Aceh
+                yang menunjukkan keberanian dan
+                keteguhan dalam perjuangan.
+
+            </p>
+
+        </div>
+
+
+        <div class="heroCard">
+
+            <div class="heroIcon">
+                KHD
+            </div>
+
+            <h3>
+                Ki Hajar Dewantara
+            </h3>
+
+            <p>
+
+                Tokoh pendidikan nasional
+                yang memperjuangkan pendidikan
+                bagi rakyat Indonesia.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ONE FOR ALL
+========================= -->
+
+<section class="one">
+
+    <h2>
+        ONE FOR ALL
+    </h2>
+
+    <h3>
+        SATU UNTUK SEMUA
+    </h3>
+
+    <p>
+
+        Indonesia tidak dibangun oleh satu orang.
+
+        Indonesia dibangun oleh jutaan manusia
+        dengan latar belakang, budaya, bahasa,
+        dan keyakinan yang berbeda.
+
+        <br><br>
+
+        Mari kita jaga warisan para pahlawan:
+
+        <strong>
+            persatuan.
+        </strong>
+
+    </p>
+
+</section>
+
+
+<!-- =========================
+     QUOTE
+========================= -->
+
+<section class="quote">
+
+    <div class="quoteText">
+
+        Mereka telah memberikan
+        masa depan kepada kita.
+
+        <br><br>
+
+        Sekarang giliran kita memberikan
+
+        <span>
+            masa depan kepada Indonesia.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="flag"
+         style="width:90px;height:60px;">
+
+        <div class="red"></div>
+        <div class="white"></div>
+
+    </div>
+
+    <h2>
+        DIRGAHAYU REPUBLIK INDONESIA 🇮🇩
+    </h2>
+
+    <p>
+        17 Agustus 1945 — Selamanya Indonesia.
+    </p>
+
+    <p>
+        ONE NATION • ONE SPIRIT • ONE FOR ALL
+    </p>
+
+</footer>
+
+
+<!-- QR SCANNER LIBRARY -->
+
+<script src="https://unpkg.com/html5-qrcode"
+        type="text/javascript">
+</script>
+
+
+<script>
+
+/*
+================================
+QR SCANNER
+================================
+*/
+
+function onScanSuccess(decodedText){
+
+    console.log("QR:",decodedText);
+
+    openWebsite();
+
+}
+
+
+function onScanError(errorMessage){
+
+    // Tidak perlu menampilkan error
+    // agar tampilan tetap bersih.
+
+}
+
+
+const scanner =
+new Html5Qrcode("reader");
+
+
+function startScanner(){
+
+    scanner.start(
+
+        {
+            facingMode:"environment"
+        },
+
+        {
+            fps:10,
+            qrbox:150
+        },
+
+        onScanSuccess,
+        onScanError
+
+    ).catch(function(error){
+
+        console.log(
+            "Kamera tidak tersedia:",
+            error
+        );
+
+    });
+
+}
+
+
+startScanner();
+
+
+/*
+================================
+BUKA WEBSITE
+================================
+*/
+
+function openWebsite(){
+
+    document
+    .getElementById("qrScreen")
+    .classList.add("hide");
+
+
+    const intro =
+    document.getElementById("intro");
+
+    intro.classList.add("show");
+
+
+    setTimeout(function(){
+
+        intro.classList.add("hide");
+
+    },2500);
+
+}
+
+
+</script>
+
+</body>
+</html>
